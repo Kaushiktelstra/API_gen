@@ -10,6 +10,15 @@ const prisma = new PrismaClient;
 app.use(cors("*"));
 app.use(express.json());
 
+app.get("/healthcheck", (req,res)=>{
+    const healthjob= {
+        "request_time": new Date().toString(),
+        "connectivity": prisma.$connect?"Connected": "Not Connected", status: "working",
+    }
+    res.send(healthjob);
+})
+
+
 app.get("/plans", async (req, res)=>{
     const allplans= await prisma.plan.findMany();
     res.send(allplans);
