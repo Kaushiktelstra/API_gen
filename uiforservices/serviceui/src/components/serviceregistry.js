@@ -20,7 +20,9 @@ export default function ServiceRegistryUI() {
 
     return (
         <div>
+        <h2> Current service running</h2>
             <ul>
+
                 {services.map((e) => (
                     <li key={e.servicename}>
                         {e.servicename} {e.url}

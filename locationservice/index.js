@@ -9,6 +9,14 @@ app.use(cors("*"));
 app.use(express.json());
 
 
+app.get("/healthcheck", (req,res)=>{
+    const healthjob= {
+        "request_time": new Date().toString(),
+        "connectivity": prisma.$connect?"Connected": "Not Connected", status: "working",
+    }
+    res.send(healthjob);
+})
+
 app.get("/locations", async (req, res)=>{
     const allloc= await prisma.location.findMany();
     res.send(allloc);
