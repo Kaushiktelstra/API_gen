@@ -1,18 +1,32 @@
-import {useEffect, useState} from "react";
-import axios from 'axios'
-export default function ServiceRegistryUI(){
-    const [services, setServices]= useState([]);
-    useEffect (()=>{
-        const servicedata= axios.get("http:localhost:3010/services");
-        setServices(servicedata.data);
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+export default function ServiceRegistryUI() {
+    const [services, setServices] = useState([]);
+
+    useEffect(() => {
+        const fetchServices = async () => {
+            try {
+                const servicedata = await axios.get("http://localhost:3010/services");
+                
+                setServices(servicedata.data);
+            } catch (error) {
+                console.error("Error fetching services:", error);
+            }
+        };
+
+        fetchServices();
     }, []);
-    
+
     return (
-        <div> {
-            services.map((e)=>(
-                <li> {e.servicename} {e.url}
-                </li>
-            ))
-        }</div>
-    )
+        <div>
+            <ul>
+                {services.map((e) => (
+                    <li key={e.servicename}>
+                        {e.servicename} {e.url}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
 }
