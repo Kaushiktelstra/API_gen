@@ -13,7 +13,7 @@ app.use(express.json());
 app.get("/healthcheck", (req,res)=>{
     const healthjob= {
         "request_time": new Date().toString(),
-        "connectivity": prisma.$connect?"Connected": "Not Connected", status: "working",
+        "connectivity": prisma.$connect?"Connected": "Not Connected", status: "working", servicename: "plan",
     }
     res.send(healthjob);
 })
